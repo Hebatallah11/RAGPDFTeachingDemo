@@ -4,6 +4,7 @@ from typing import Any, Dict
 from dotenv import load_dotenv
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
+from backend.ocr_loader import load_pdf_with_ocr_fallback
 from langchain_community.vectorstores import FAISS
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
@@ -23,7 +24,7 @@ vector_store = None
 
 
 def load_pdf(file_path: str):
-    loader = PyPDFLoader(file_path)
+    loader = load_pdf_with_ocr_fallback(file_path)
     return loader.load()
 
 
